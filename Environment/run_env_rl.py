@@ -232,7 +232,7 @@ class Environment:
         # show gui
         # sumo_cmd = ["sumo-gui", "-c", env_variables.network_path]
         # dont show gui
-        sumo_cmd = ["sumo-gui", "-c", env_variables.network_path]
+        sumo_cmd = ["sumo", "-c", env_variables.network_path]
         traci.start(sumo_cmd)
 
         # end the simulation and d
