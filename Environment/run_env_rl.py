@@ -47,7 +47,7 @@ matplotlib.use('agg')
 fig_reward_decentralize, axs_reward_decentralize, lines_out_reward_decentralize = plotting_reward_decentralize()
 fig_reward_centralize, axs_reward_centralize, lines_out_reward_centralize = plotting_reward_centralize()
 fig, axs, lines_out_utility, lines_out_requested, lines_out_ensured = plotting_Utility_Requested_Ensured()
-
+counter = 0
 
 class Environment:
     size = 0
@@ -647,7 +647,7 @@ class Environment:
                 env_variables.AUTONOMOUS_RATIO = 0.3
                 env_variables.SAFETY_RATIO = 0.5
             # day time
-            elif env_variables.period1 + 10 < step <= env_variables.period2:
+            elif env_variables.period1 < step <= env_variables.period2:
                 env_variables.number_cars_mean_std['mean'] = 100
                 env_variables.number_cars_mean_std['std'] = 2
                 env_variables.threashold_number_veh = 50
@@ -655,7 +655,7 @@ class Environment:
                 env_variables.AUTONOMOUS_RATIO = 0.3
                 env_variables.SAFETY_RATIO = 0.4
 
-            elif env_variables.period2 + 10 < step <= env_variables.period3:
+            elif env_variables.period2 < step <= env_variables.period3:
                 env_variables.number_cars_mean_std['mean'] = 150
                 env_variables.number_cars_mean_std['std'] = 2
                 env_variables.threashold_number_veh = 85
@@ -663,7 +663,7 @@ class Environment:
                 env_variables.AUTONOMOUS_RATIO = 0.2
                 env_variables.SAFETY_RATIO = 0.2
 
-            elif env_variables.period3 + 10 < step <= env_variables.period4:
+            elif env_variables.period3 < step <= env_variables.period4:
                 env_variables.number_cars_mean_std['mean'] = 100
                 env_variables.number_cars_mean_std['std'] = 2
                 env_variables.threashold_number_veh = 50
@@ -671,7 +671,7 @@ class Environment:
                 env_variables.AUTONOMOUS_RATIO = 0.3
                 env_variables.SAFETY_RATIO = 0.4
 
-            elif env_variables.period4 + 10 < step <= env_variables.period5:
+            elif env_variables.period4 < step <= env_variables.period5:
                 env_variables.number_cars_mean_std['mean'] = 85
                 env_variables.number_cars_mean_std['std'] = 2
                 env_variables.threashold_number_veh = 25
@@ -816,11 +816,16 @@ class Environment:
             step += 1
 
             if step == env_variables.TIME:
+                steps = 0
+                counter += 1
                 for i in range(1):
                     gridcells_dqn[i].model.save(os.path.join(path4, f'weights_{i}.hdf5'))
 
                 for index, g in enumerate(temp_outlets):
                     g.dqn.model.save(os.path.join(path5, f'weights_{index}.hdf5'))
+
+            if counter == env_variables.REPEAT:
+                break
 
         plt.close()
         traci.close()
