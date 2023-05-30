@@ -47,9 +47,9 @@ matplotlib.use('agg')
 fig_reward_decentralize, axs_reward_decentralize, lines_out_reward_decentralize = plotting_reward_decentralize()
 fig_reward_centralize, axs_reward_centralize, lines_out_reward_centralize = plotting_reward_centralize()
 fig, axs, lines_out_utility, lines_out_requested, lines_out_ensured = plotting_Utility_Requested_Ensured()
-counter = 0
 
 class Environment:
+    counter = 0
     size = 0
     data = {}
     Grids = {}
@@ -817,14 +817,14 @@ class Environment:
 
             if step == env_variables.TIME:
                 steps = 0
-                counter += 1
+                self.counter += 1
                 for i in range(1):
                     gridcells_dqn[i].model.save(os.path.join(path4, f'weights_{i}.hdf5'))
 
                 for index, g in enumerate(temp_outlets):
                     g.dqn.model.save(os.path.join(path5, f'weights_{index}.hdf5'))
 
-            if counter == env_variables.REPEAT:
+            if self.counter == env_variables.REPEAT:
                 break
 
         plt.close()
